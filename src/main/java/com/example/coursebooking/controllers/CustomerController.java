@@ -6,9 +6,7 @@ import com.example.coursebooking.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,4 +39,21 @@ public class CustomerController {
         }
         return new ResponseEntity<>(customerRepository.findAll(), HttpStatus.OK);
     }
+
+    @PostMapping(value = "/customers")
+    public ResponseEntity<Customer> postCustomer(@RequestBody Customer customer){
+        customerRepository.save(customer);
+        return new ResponseEntity<>(customer, HttpStatus.CREATED);
+    }
+//
+//    @PutMapping(value = "/customers/{id}")
+//    @ResponseBody
+//    public ResponseEntity<Customer> putCustomer(@PathVariable(value = "id") Long id, @RequestBody Customer customerDetails){
+//        Customer customer = customerRepository.getById(id);
+//        customer.setName(customerDetails.getName());
+//        customer.setTown(customerDetails.getTown());
+//        customer.setAge(customerDetails.getAge());
+//        final Customer updatedCustomer = customerRepository.save(customer);
+//        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+//    }
 }
