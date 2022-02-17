@@ -22,18 +22,22 @@ public class CustomerController {
 
     @GetMapping(value = "/customers")
     public ResponseEntity<List<Customer>> getAllCustomers(
-            @RequestParam(name = "course", required = false) String name,
+            @RequestParam(name = "course", required = false) String courseName,
             @RequestParam(name = "townName", required = false) String townName,
-            @RequestParam(name = "age", required = false) Integer age
+            @RequestParam(name = "age", required = false) Integer age,
+            @RequestParam(name = "name", required = false) String customerName
     ){
-        if(age != null && name != null && townName != null){
-            return new ResponseEntity<>(customerRepository.findByAgeGreaterThanAndTownAndBookingsCourse(age, townName, courseRepository.findByName(name)), HttpStatus.OK);
+        if(age != null && courseName != null && townName != null){
+            return new ResponseEntity<>(customerRepository.findByAgeGreaterThanAndTownAndBookingsCourseAllIgnoreCase(age, townName, courseRepository.findByNameIgnoreCase(courseName)), HttpStatus.OK);
         }
-        else if (name != null && townName != null){
-            return new ResponseEntity<>(customerRepository.findByTownAndBookingsCourse(townName, courseRepository.findByName(name)), HttpStatus.OK);
+        else if (courseName != null && townName != null){
+            return new ResponseEntity<>(customerRepository.findByTownAndBookingsCourseAllIgnoreCase(townName, courseRepository.findByNameIgnoreCase(courseName)), HttpStatus.OK);
         }
-        else if (name != null){
-            return new ResponseEntity<>(customerRepository.findByBookingsCourse(courseRepository.findByName(name)), HttpStatus.OK);
+        else if (courseName != null){
+            return new ResponseEntity<>(customerRepository.findByBookingsCourseAllIgnoreCase(courseRepository.findByNameIgnoreCase(courseName)), HttpStatus.OK);
+        }
+        else if (customerName != null){
+            return new ResponseEntity(customerRepository.findByNameIgnoreCase(customerName), HttpStatus.OK);
         }
         return new ResponseEntity<>(customerRepository.findAll(), HttpStatus.OK);
     }

@@ -29,7 +29,7 @@ public class CourseController {
             return new ResponseEntity<>(courseRepository.findByRating(rating), HttpStatus.OK);
         }
         else if(customer != null){
-            return new ResponseEntity<>(courseRepository.findByBookingsCustomer(customerRepository.findByName(customer)), HttpStatus.OK);
+            return new ResponseEntity<>(courseRepository.findByBookingsCustomerAllIgnoreCase(customerRepository.findByNameIgnoreCase(customer)), HttpStatus.OK);
         }
         return new ResponseEntity<>(courseRepository.findAll(), HttpStatus.OK);
     }
