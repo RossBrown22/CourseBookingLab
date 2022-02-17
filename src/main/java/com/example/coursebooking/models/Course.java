@@ -22,7 +22,7 @@ public class Course {
     private int rating;
 
     @OneToMany(mappedBy = "course")
-    @JsonIgnoreProperties({"course"})
+    @JsonIgnoreProperties({"course","customer"})
     private List<Booking> bookings;
 
     public Course(String name, String town, int rating) {
